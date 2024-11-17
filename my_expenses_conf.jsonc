@@ -1,0 +1,42 @@
+{
+    // The CSV and JSON mapping are based on the current fields present in my expenses export. 
+    // There is no need to change this, unless the export format changes
+    "csv_field_mappings": {
+        "DATE": "Date",
+        "PAYEE": "Payee/Payer",
+        "INCOME": "Income",
+        "EXPENSE": "Expense",
+        "CATEGORY": "Category",
+        "NOTES": "Notes"
+    },
+    "json_field_mappings": {
+        "ID": "uuid",
+        "DATE": "date",
+        "PAYEE": "payee",
+        "AMOUNT": "amount",
+        "CATEGORY": "category",
+        "NOTES": "comment",
+        "TRANSFER_ACCOUNT": "transferAccount"
+    },
+    "category_account_mapping": {
+        // Add other account mappings here
+        "Food > Snacks": "Expenses:Food:Snacks", 
+        "Leisure > Books": "Expenses:Shopping:Books"
+    },
+    "files": [
+        {
+            "file_path": "<path_to_file>",
+            "file_type": "JSON", // Can only be JSON or CSV for now
+            "date_format": "%m/%d/%y", // The date format in strftime
+            "account": "<account_the_file_represents>",
+            "account_currency": "<account_currency>"
+        },
+        {
+            "file_path": "<path_to_file>",
+            "file_type": "JSON",
+            "date_format": "%m/%d/%y",
+            "account": "Assets:Savings:Chase",
+            "account_currency": "USD"
+        }
+    ]
+}
