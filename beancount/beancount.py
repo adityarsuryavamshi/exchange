@@ -40,11 +40,13 @@ class BeancountTxnEntry:
         flag: str | None = None,
         payee: str | None = None,
         narration: str | None = None,
+        tags: list[str] = [],
     ) -> None:
         self.date = date
         self.flag = flag
         self.payee = payee
         self.narration = narration
+        self.tags = tags
         self.postings: list[BeancountPostingEntry] = []
 
     def add_posting(self, posting: BeancountPostingEntry):
@@ -59,6 +61,9 @@ class BeancountTxnEntry:
             header += f' "{self.payee}"'
         if self.narration:
             header += f' "{self.narration}"'
+        
+        for tag in self.tags:
+            header += f' #{tag}'
 
         for posting in self.postings:
             header += f"\n\t{posting}"

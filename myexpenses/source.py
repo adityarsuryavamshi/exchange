@@ -163,6 +163,7 @@ class MyExpensesEntryMapper(EntryToTxnMapper):
         me_txn.date = entry.date
         me_txn.payee = entry.payee
         me_txn.comments = entry.notes
+        me_txn.tags = entry.tags
 
         interacting_account = self.category_account_mapping.get(entry.category, entry.category)
         is_debit_for_interacting_account = (

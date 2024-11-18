@@ -17,6 +17,7 @@ class MyExpensesEntry:
         amount_in_src_account_currency: float | None = None,
         original_amount: float | None = None,
         original_amount_currency: str | None = None,
+        tags: list[str]= [],
     ) -> None:
         self.id = id
         self.source_account = source_account
@@ -32,10 +33,12 @@ class MyExpensesEntry:
         self.original_amount = original_amount
         self.original_amount_currency = original_amount_currency
 
+        self.tags = tags
+
     def __str__(self) -> str:
         """Used primarily for debugging."""
         expense_entry_line = f'{self.id if self.id else ""}'
-        expense_entry_line += f'{self.date.isoformat()} {"I" if self.is_income else "E"} "{self.payee}" "{self.notes}"\n'
+        expense_entry_line += f'{self.date.isoformat()} {"I" if self.is_income else "E"} "{self.payee}" "{self.notes}" "#{self.tags}"\n'
         expense_entry_line += f'{f"{self.source_account} -> {self.category}" if not self.is_income else f"{self.category} -> {self.source_account}"}'
 
         if self.original_amount and self.original_amount_currency:
@@ -89,6 +92,7 @@ class MyExpensesTxn(Transaction):
         self.payee: str | None = ""
         self.comments: str | None = ""
         self.postings: list[Posting] = []
+        self.tags: list[str] = []
 
     def add_posting(self, posting: MyExpensesPosting):
         self.postings.append(posting)

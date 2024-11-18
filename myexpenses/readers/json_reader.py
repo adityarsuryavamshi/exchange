@@ -10,6 +10,7 @@ class JSONReader:
     __NOTES = "NOTES"
     __ID = "ID"
     __TRANSFER_ACCOUNT = "TRANSFER_ACCOUNT"
+    __TAGS = "TAGS"
 
     def __init__(
         self,
@@ -26,13 +27,14 @@ class JSONReader:
         self.account_currency = account_currency
         self.reader = None
 
-    def __get_my_expenses_txn(self, json_txn):
+    def __get_my_expenses_entry(self, json_txn):
         id = json_txn.get(self.field_mapping[self.__ID], "").strip()
         date_str = json_txn.get(self.field_mapping[self.__DATE], "").strip()
         payee = json_txn.get(self.field_mapping[self.__PAYEE], "").strip()
         amount = float(json_txn.get(self.field_mapping[self.__AMOUNT], 0))
         category = json_txn.get(self.field_mapping[self.__CATEGORY], [])
         notes = json_txn.get(self.field_mapping[self.__NOTES], "").strip()
+        tags = json_txn.get(self.field_mapping[self.__TAGS], [])
 
         transfer_account = json_txn.get(
             self.field_mapping[self.__TRANSFER_ACCOUNT], ""
@@ -62,6 +64,7 @@ class JSONReader:
             date=txn_date,
             payee=payee,
             notes=notes,
+            tags=tags,
             is_income=is_income,
             category=concatted_category,
             amount_in_src_account_currency=abs(
@@ -83,4 +86,4 @@ class JSONReader:
 
         next_txn = self.json_txns[self.txn_count]
         self.txn_count += 1
-        return self.__get_my_expenses_txn(next_txn)
+        return self.__get_my_expenses_entry(next_txn)
